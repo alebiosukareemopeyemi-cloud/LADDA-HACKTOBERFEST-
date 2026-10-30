@@ -12,7 +12,7 @@ Working style: informal, direct. Settle ideas before generating large files. Nev
 ## Status
 - [x] Step 1a: scaffold, dependencies, shadcn init, first commit
 - [x] Step 1b: .gitignore, .env.example, key generation
-- [ ] Step 1c: lib/contract (Zod), lib/mocks, NEXT_PUBLIC_USE_MOCKS switch
+- [x] Step 1c: lib/contract (Zod), lib/mocks, lib/api/client.ts, NEXT_PUBLIC_USE_MOCKS switch
 - [ ] Step 1d: GitHub push + Vercel deploy
 - [ ] Step 2: design system (palette, fonts, tokens, motion rules)
 - [ ] Step 3: Backend engineering catalog (12 nodes)
@@ -22,6 +22,11 @@ Working style: informal, direct. Settle ideas before generating large files. Nev
 - Fresh project (ladda-v2); old keys not reused
 - Prisma installed but not set up until the database step
 - Env: Supabase vars use NEXT_PUBLIC_ prefix; GEMINI_API_KEY passed explicitly to the AI SDK
+- Node panel: Learn, Build (upload), Test (shown locked, "coming soon"), plus optional Certificates panel (suggested + upload). Scoring and rubric details stay loose until later.
+- Contract lives in lib/contract (one file per area, re-exported from index.ts). Mocks in lib/mocks, typed wrappers in lib/api/client.ts. Mock mode is on while NEXT_PUBLIC_USE_MOCKS=1.
+- app/dev/page.tsx is a throwaway check page. Delete it before the demo.
+- Intake defaults: one question per screen, 3 ranked paths, hours as chips, CV matches pre-ticked with the CV line as evidence.
+- Verify page: AI summary sits above the evidence.
 
 ## Keys
 Names are in .env.example. Values are in .env.local and the owner's password manager. The ed25519 private key must never change after credentials are issued.
