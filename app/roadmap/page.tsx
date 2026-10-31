@@ -24,7 +24,6 @@ export default function RoadmapPage() {
   }, []);
 
   function onSelect(n: RoadmapNode) {
-    console.log("pin clicked", n.id, n.locked);
     if (!roadmap) return;
     if (n.locked) {
       const names = n.blockedBy
@@ -35,7 +34,7 @@ export default function RoadmapPage() {
       setHighlight(n.blockedBy[0] ?? null);
     } else {
       setHighlight(null);
-
+      router.push(`/roadmap/${n.id}`);
     }
   }
 

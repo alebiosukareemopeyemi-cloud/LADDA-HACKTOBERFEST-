@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CertificatesPanel } from "@/components/roadmap/CertificatesPanel";
 import { useParams, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Check, ExternalLink } from "lucide-react";
@@ -417,6 +418,7 @@ export default function NodePage() {
               </motion.section>
             )}
           </AnimatePresence>
+          <CertificatesPanel suggested={detail.suggestedCertificates} />
         </>
       )}
     </main>

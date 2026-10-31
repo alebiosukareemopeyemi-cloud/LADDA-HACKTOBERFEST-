@@ -1,56 +1,70 @@
 # Ladda: Handoff
 
-Source of truth: docs/Ladda_Full_Build_Plan.pdf (Sections 13 to 15 win on conflicts).
+Source of truth: docs/Ladda_Full_Build_Plan.pdf (Sections 13 to 15 win on conflicts). Where this file and the PDF disagree, this file is newer (node page is its own page, not a side panel; ONE founder card on landing).
 Solo build by Kareem. Frontend, product design and animation lead the work.
-Working style: informal, direct. Settle ideas before generating large files. Never put secret values in the repo or chat.
+Working style: informal, direct. Settle ideas before generating large files and wait for his go-ahead. Never put secret values in the repo or chat.
 
 ## Project
 - Folder: C:\Users\PROGRESSIVE\code\ladda-v2 (old builds: ladda, ladda-old, ladda-new-backup; do not reuse)
 - Stack: Next.js 15, TypeScript, Tailwind v4, shadcn/ui (Nova preset), Framer Motion, Zod, Supabase, Prisma, Vercel AI SDK + Gemini, ed25519 signing
-- Windows + PowerShell. Portmaster firewall is on and can block node.exe.
+- Windows + PowerShell. Portmaster firewall is on and can block node.exe (allow it). Network is slow, first compile of a new route can take 10+ seconds. npm needs approve-scripts for prisma. Prisma engine download can hang.
+- Dev server may land on port 3002 if 3000 is taken; check the terminal.
+- Live: https://ladda-hacktoberfest.vercel.app (private repo, auto-deploys on push to main)
 
 ## Status
-- [x] Step 1a: scaffold, dependencies, shadcn init, first commit
-- [x] Step 1b: .gitignore, .env.example, key generation
-- [x] Step 1c: lib/contract (Zod), lib/mocks, lib/api/client.ts, NEXT_PUBLIC_USE_MOCKS switch
-- [x] Step 1d: GitHub push + Vercel deploy (live: https://ladda-hacktoberfest.vercel.app, private repo, auto-deploys on push to main)
-- [ ] Step 2: - [x] Step 2: design system (globals.css, layout.tsx, lib/motion.ts, app/design/page.tsx preview; delete /design and /dev before the demo)
-- [x] Step 3: Backend engineering catalog (content/catalog/backend.json, checked by scripts/validate-catalog.mjs)
+- [x] Step 1: scaffold, .gitignore, .env.example, keys, lib/contract (Zod), lib/mocks, lib/api/client.ts, NEXT_PUBLIC_USE_MOCKS switch, GitHub + Vercel
+- [x] Step 2: design system (globals.css, layout.tsx, lib/motion.ts, app/design/page.tsx preview; delete /design and /dev before the demo)
+- [x] Step 3: Backend catalog (content/catalog/backend.json, checked by scripts/validate-catalog.mjs)
+- [x] Step 4: Roadmap screen on mocks (app/roadmap/page.tsx, components/roadmap/RoadmapRoad.tsx, CountUp.tsx, lib/roadmap/geometry.ts). RoadmapRoad accepts an optional `labels` prop (per-stop status text, e.g. "Coming soon").
+- [~] Step 5: Node page. DONE: app/roadmap/[node]/page.tsx with header, 3-stop road (Learn, Build, Test), Learn panel (resource cards, empty state, disabled "Study it in a real repo"), Build panel (brief, criteria bars, GitHub link input, mock review: 2.5s shimmer then score; link containing "fail" gives Needs work + resubmit). Mock approval is in-memory only (resets on refresh).
+  - TODO piece 3: Certificates panel under the road (suggested + upload/link).
+  - KNOWN BUG: tapping a pin on /roadmap does not navigate to /roadmap/[node] (click handler fires, navigation does nothing, router.push and window.location both failed). Page works when opened by URL, e.g. /roadmap/node-express. Fix next.
+  - Typo in catalog: "totalsexpenses" in js-ts-basics project brief (should be "totals expenses").
+- [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account)
+- [ ] Step 7: Intake (3 questions, optional CV step) + "building your path" animation
+- [ ] Step 8: Real roadmap engine (server-enforced unlocks, replaces mocks)
+- [ ] Step 9: AI project review (GitHub reading, rubric scoring, polling, unlock animation)
+- [ ] Step 10: Credential signing + verify page (client-side check, tamper test)
+- [ ] Step 11: Landing page + try-it demo (caching, rate limits)
+- [ ] Step 12: Repo tutor on 2 or 3 pre-analysed repos
+- [ ] Step 13: Dashboard extras (opportunities cards, Hacktoberfest popup, notes, "Check back Sunday" challenges)
+- [ ] Step 14: Demo rehearsal (seed data, cached fallbacks, 90-second run-through)
 
 ## Decisions
 - Fresh project (ladda-v2); old keys not reused
 - Prisma installed but not set up until the database step
 - Env: Supabase vars use NEXT_PUBLIC_ prefix; GEMINI_API_KEY passed explicitly to the AI SDK
-- Node panel: Learn, Build (upload), Test (shown locked, "coming soon"), plus optional Certificates panel (suggested + upload). Scoring and rubric details stay loose until later.
-- Contract lives in lib/contract (one file per area, re-exported from index.ts). Mocks in lib/mocks, typed wrappers in lib/api/client.ts. Mock mode is on while NEXT_PUBLIC_USE_MOCKS=1.
-- app/dev/page.tsx is a throwaway check page. Delete it before the demo.
+- Node panel: Learn, Build (upload), Test (shown locked, "coming soon"), plus optional Certificates panel (suggested + upload). Verified = approved project; a certificate never makes a node Verified.
+- Contract lives in lib/contract (one file per area, re-exported from index.ts). Mocks in lib/mocks (roadmap mock already reads content/catalog/backend.json), typed wrappers in lib/api/client.ts. Mock mode is on while NEXT_PUBLIC_USE_MOCKS=1.
+- app/dev/page.tsx and app/design/page.tsx are throwaway. Delete before the demo.
 - Intake defaults: one question per screen, 3 ranked paths, hours as chips, CV matches pre-ticked with the CV line as evidence.
 - Verify page: AI summary sits above the evidence.
-- Backend path is Node.js + TypeScript (so the repo tutor, which only reads TS/JS repos, can explain every submitted project). 12 skills: js-ts-basics, git-github, http-rest, cli-dev-setup (stretch), node-express, sql-postgres, rest-api, auth-security, testing (stretch), deploying, capstone-api, proof-capstone. About 105h total, 96h must-have.
-- Catalog resources arrays are EMPTY on purpose: Kareem adds hand-checked links later. Never invent URLs. Capstone and proof nodes have no CV synonyms, so a CV can never mark them Known.
-- lib/mocks/roadmap.ts still uses placeholder ids n1 to n12; switch it to read content/catalog/backend.json in Step 4.
+- Backend path is Node.js + TypeScript (repo tutor only reads TS/JS repos). 12 skills: js-ts-basics, git-github, http-rest, cli-dev-setup (stretch), node-express, sql-postgres, rest-api, auth-security, testing (stretch), deploying, capstone-api, proof-capstone. About 105h total, 96h must-have.
+- Catalog resources arrays are EMPTY on purpose: Kareem adds hand-checked links later. Never invent URLs. Mock resources/certificates use example.com placeholders. Capstone and proof nodes have no CV synonyms, so a CV can never mark them Known.
+- Server owns every decision (status, unlocks, scores, signatures). Anti-cheat: Known unlocks nodes in between, but the Proof node and the credential need every must-have node Verified.
+- Opportunities (at least 6, hand-added), AWS Hacktoberfest popup (once, inside a date window), Ladda challenges coming-soon card ("Check back Sunday"). Employers have no accounts.
 
-## Keys
-Names are in .env.example. Values are in .env.local and the owner's password manager. The ed25519 private key must never change after credentials are issued.
-## Design decisions (Step 2, locked by Kareem)
-- Mood: energetic green gradients with black touches. Palette "Neon forest": gradient #047857 to #BEF264 on near-black (#070A08). Dark is the default theme (put class "dark" on <html>); light mode is a full second token set.
+## Env variables (names only, values in .env.local and the owner's password manager)
+NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_USE_MOCKS, Supabase URL/anon/service-role keys, DATABASE_URL, GEMINI_API_KEY, GITHUB_TOKEN, RESEND_API_KEY, CREDENTIAL_PRIVATE_KEY, CREDENTIAL_PUBLIC_KEY. See .env.example for exact names. The ed25519 private key must never change after credentials are issued.
+
+## Design decisions (locked by Kareem)
+- Mood: energetic green gradients with black touches. Palette "Neon forest": gradient #047857 to #BEF264 on near-black (#070A08). Dark is default (class "dark" on <html>); light mode is a full second token set.
 - Shapes: very rounded and pill-like. Buttons, chips and inputs are full pills; cards about 28px radius.
-- Fonts: Bricolage Grotesque (headings), Instrument Sans (body), JetBrains Mono (tags, hours, scores, hashes). Avoid generic AI-looking fonts.
+- Fonts: Bricolage Grotesque (headings), Instrument Sans (body), JetBrains Mono (tags, hours, scores, hashes).
 - Glow: soft lime glow on hero and primary CTAs only; flat with crisp borders elsewhere.
-- Motion: rich on app pages (nodes, cards, buttons animate). Shared presets in lib/motion.ts: fadeUp, pop, drawPath, pulse, unlockBurst. Springs for movement; micro 150ms, standard 300ms, big moments 600 to 900ms; stagger 60ms; hover lifts, press shrinks; respect prefers-reduced-motion.
-- Animation ideas to build: path draws in then nodes pop; unlock chain lights the path lime and opens dependants one by one with a spark burst; Known node flips like a card; count-up numbers and progress ring; green skeleton shimmer and streamed AI text; magnetic primary buttons.
+- Motion: rich on app pages. Shared presets in lib/motion.ts: fadeUp, pop, drawPath, pulse, unlockBurst, spring. Micro 150ms, standard 300ms, big moments 600 to 900ms; stagger 60ms; hover lifts, press shrinks; respect prefers-reduced-motion.
 - Node state look: verified = gradient fill; known = soft mint tint + outline; in progress = lime ring with pulse; todo = muted outline; locked = dimmed + lock icon.
-- Existing app/globals.css is the shadcn Nova default (neutral oklch tokens, @theme inline, --font-mono points at Geist). Rewrite it keeping the same variable names so shadcn components keep working.
+- Animation ideas still to build: unlock chain lights the path and opens dependants one by one with a spark burst; Known node flips like a card; green skeleton shimmer and streamed AI text; magnetic primary buttons.
 
 ## Screens and navigation (locked)
-- Roadmap page: full-bleed winding "snake road" SVG with numbered pins (like a road-diagram reference). One reusable component; the path is generated from the stop count so it draws both the 12-node roadmap and the 3-stop Learn/Build/Test road. Pin shows skill name at full brightness with a dimmer status line (Verified / Known / In progress); locked = lock icon + dimmed. On phones the road winds vertically and scrolls. Path draws in, pins drop in one by one, active pin pulses.
-- Node page (replaces the side panel from the old plan): tap a pin to go to its own page (something like /roadmap/[node]) showing the skill plus the same winding road with three stops: Learn, Build (upload), Test (lock icon, "coming soon"). Certificates panel (suggested + upload) sits under the road. Contract lib/contract/node.ts already matches.
-- Shell: hamburger-style menu with Roadmap, Leaderboard, Your Notes, Opportunities, Connect. Top bar has a round profile image that springs open into Profile, Settings, Sign out. Credentials lives in the profile menu. Profile and Settings stay tiny (Profile shows intake answers; Settings has the light/dark toggle). Low priority.
-- Connect (Phase C, if time): suggested students in your field (seeded, labelled sample users), community cards plus "Create a community"; chat shown locked as "coming soon". Do not claim chat on stage unless built.
-- Landing page style reference: Kareem's FindIt page (mono tag labels with numbered markers like "NO. 001" or "RUNG 03", pill chips, dotted dividers, striped-top cards, a scrolling "recently verified" strip, everything tappable). Landing includes a short animation of someone stepping up a ladder (look to be decided with Kareem), a "Meet the founders" section with ONE card (Alebiosu Kareem; content/builders.ts holds a single entry), and an AWS Hacktoberfest section (only say "partnering" if it is a real partnership; otherwise "Featured: AWS Hacktoberfest is live").
+- Roadmap page: full-bleed winding "snake road" SVG with numbered pins, one reusable component for the 12-node road and the 3-stop road.
+- Node page: /roadmap/[node] with the 3-stop road and content expanding below the road (not a bottom sheet). Certificates panel sits under the road.
+- Shell: hamburger menu with Roadmap, Leaderboard, Your Notes, Opportunities, Connect. Top bar has a round profile image that opens Profile, Settings, Sign out. Credentials lives in the profile menu. Profile and Settings stay tiny.
+- Connect (Phase C, if time): sample users and communities, chat shown locked "coming soon". Do not claim chat on stage unless built.
+- Landing: style reference is Kareem's FindIt page (mono tag labels, pill chips, dotted dividers, striped-top cards, "recently verified" strip). Hero has three buttons (Get started free, I already have an account, Verify a credential for employers) plus a fairly large ladder-climbing animation on the right (look decided with Kareem at the landing step). ONE founder card (content/builders.ts, Alebiosu Kareem). AWS Hacktoberfest section: only say "partnering" if it is real; otherwise "Featured: AWS Hacktoberfest is live".
 
 ## How to work with Kareem
 - Informal, direct, practical. Ask him for EVERY design choice before building it. Settle ideas and copy before generating large files; wait for his go-ahead.
 - One small PowerShell command at a time (a batched paste broke things before). No bash-only syntax. Never ask for or print secret values, only variable names.
-- He is credit-conscious. Update this file after each step.
-- Landing hero: three buttons (Get started free, I already have an account, Verify a credential for employers, no login) plus a fairly large ladder-climbing animation on the right-hand side. Look of the character and what sits at the top of the ladder to be decided with Kareem at the landing step.
+- When sending code: prefer ONE full-file replacement over several small edits (he makes paste mistakes). Long messages can get cut when pasting, so check the end of the file.
+- He is credit-conscious. Update this file after each step. Remind him to push to GitHub after each step.
