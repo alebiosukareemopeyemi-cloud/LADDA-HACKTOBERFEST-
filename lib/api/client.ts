@@ -9,12 +9,17 @@ import {
   OpportunityListSchema,
   OpportunitySchema,
   DemoResultSchema,
+  SuggestPathsResponseSchema,
+  BuildRoadmapResponseSchema,
   type ApiResult,
+  type BuildRoadmapRequest,
+  type BuildRoadmapResponse,
   type DemoRequest,
   type EvidencePoll,
   type NodeDetail,
   type OpportunityList,
   type Opportunity,
+  type PathSuggestion,
   type Roadmap,
   type VerifyResponse,
   type DemoResult,
@@ -28,6 +33,8 @@ import {
   mockDemoCourse,
   mockDemoGraduate,
 } from "@/lib/mocks/other";
+import { mockPaths } from "@/lib/mocks/intake";
+import { buildPlannedRoadmap } from "@/lib/intake/planner";
 
 const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "1";
 
@@ -66,9 +73,25 @@ async function call<T extends z.ZodType>(
 
 const post = (body: unknown): RequestInit => ({ method: "POST", body: JSON.stringify(body) });
 
+// ---- Mock bridge: the roadmap Intake builds, kept for this browser tab ----
+const INTAKE_KEY = "ladda:intake-roadmap";
+
+function savedIntakeRoadmap(): Roadmap | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(INTAKE_KEY);
+    if (!raw) return null;
+    const parsed = RoadmapSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  } catch {
+    return null;
+  }
+}
+
 // ---- Roadmap and nodes ----
 export async function getRoadmap(): Promise<ApiResult<Roadmap>> {
-  return USE_MOCKS ? mock(mockRoadmap) : call("/api/roadmap", RoadmapSchema);
+  if (USE_MOCKS) return mock(savedIntakeRoadmap() ?? mockRoadmap);
+  return call("/api/roadmap", RoadmapSchema);
 }
 
 export async function getNodeDetail(nodeId: string): Promise<ApiResult<NodeDetail>> {
@@ -77,6 +100,41 @@ export async function getNodeDetail(nodeId: string): Promise<ApiResult<NodeDetai
     return d ? mock(d) : notFound();
   }
   return call(`/api/roadmap?node=${encodeURIComponent(nodeId)}`, NodeDetailSchema);
+}
+
+// ---- Intake ----
+export async function suggestPaths(
+  interests: string
+): Promise<ApiResult<{ paths: PathSuggestion[] }>> {
+  if (USE_MOCKS) return mock({ paths: mockPaths });
+  return call("/api/intake/suggest-paths", SuggestPathsResponseSchema, post({ interests }));
+}
+
+export async function buildRoadmap(
+  req: BuildRoadmapRequest
+): Promise<ApiResult<BuildRoadmapResponse>> {
+  if (USE_MOCKS) {
+    const out = buildPlannedRoadmap({
+      stage: req.stage,
+      hoursPerWeek: req.hoursPerWeek,
+      knownSkillIds: req.knownSkillIds,
+    });
+    try {
+      window.sessionStorage.setItem(INTAKE_KEY, JSON.stringify(out.roadmap));
+    } catch {
+      // storage can be blocked; the roadmap page falls back to the demo student
+    }
+    return mock(out);
+  }
+  return call("/api/intake/build-roadmap", BuildRoadmapResponseSchema, post(req));
+}
+
+// Always hits the real route (auth is real even in mock mode), so profile_complete gets saved.
+const CompleteIntakeSchema = z.object({ done: z.boolean() });
+export async function completeIntake(
+  req: BuildRoadmapRequest
+): Promise<ApiResult<{ done: boolean }>> {
+  return call("/api/intake/complete", CompleteIntakeSchema, post(req));
 }
 
 // ---- Project submit and polling ----

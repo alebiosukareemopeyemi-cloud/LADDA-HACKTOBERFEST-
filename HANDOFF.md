@@ -20,8 +20,8 @@ Working style: informal, direct. Settle ideas before generating large files and 
   - Pin navigation bug: CONFIRM FIXED (if not, check RoadmapRoad.tsx click handler and slow first compile of the route).
   - Catalog typo "totalsexpenses" in js-ts-basics brief: CONFIRM FIXED.
 - [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account). NEXT.
-- [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account)
-- [ ] Step 7: Intake (3 questions, optional CV step) + "building your path" animation
+- [x] Step 6: Auth done (/auth, /auth/verify-email, /auth/callback, lib/supabase client+server, middleware). Demo account created manually in Supabase. Email sending is limited by the built-in sender; custom SMTP is a bonus. TODO: flip ENFORCE_INTAKE in middleware.ts once Intake exists, and HOME to /dashboard after Step 13.
+- [ ] Step 7: Intake. NEXT.
 - [ ] Step 8: Real roadmap engine (server-enforced unlocks, replaces mocks)
 - [ ] Step 9: AI project review (GitHub reading, rubric scoring, polling, unlock animation)
 - [ ] Step 10: Credential signing + verify page (client-side check, tamper test)
