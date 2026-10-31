@@ -1,0 +1,244 @@
+{
+  "roleId": "backend",
+  "roleTitle": "Backend Engineer",
+  "language": "Node.js + TypeScript",
+  "skills": [
+    {
+      "id": "js-ts-basics",
+      "title": "JavaScript and TypeScript basics",
+      "blurb": "Variables, functions, async code and types: the language every later step builds on.",
+      "phase": "foundations",
+      "hours": 12,
+      "stretch": false,
+      "prereqs": [],
+      "synonyms": ["javascript", "typescript", "js", "ts", "es6"],
+      "project": {
+        "title": "Expense tracker CLI",
+        "brief": "Build a command-line app that adds, lists and totals expenses, saving them to a JSON file. Use TypeScript types for every expense.",
+        "criteria": ["Runs without errors", "Uses TypeScript types properly", "Clear README with run steps"]
+      },
+      "suggested": [
+        { "title": "Quiz game in the terminal", "brief": "Ask questions, keep score, store a high score file." },
+        { "title": "Word counter", "brief": "Read a text file and print the most common words." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "git-github",
+      "title": "Git and GitHub",
+      "blurb": "Commits, branches and pull requests: how real teams save and share code.",
+      "phase": "foundations",
+      "hours": 4,
+      "stretch": false,
+      "prereqs": [],
+      "synonyms": ["git", "github", "version control", "gitlab"],
+      "project": {
+        "title": "Branch and pull request practice repo",
+        "brief": "Create a repo, make at least three meaningful commits on a feature branch, then open and merge a pull request with a clear description.",
+        "criteria": ["Meaningful commit messages", "Used a branch and merged a pull request", "Clear README"]
+      },
+      "suggested": [
+        { "title": "Fix a typo in an open-source README", "brief": "Fork a small project and send a real pull request." },
+        { "title": "Resolve a merge conflict", "brief": "Create a conflict on purpose, fix it, and document how." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "http-rest",
+      "title": "HTTP and REST",
+      "blurb": "Requests, responses, status codes and how APIs are designed.",
+      "phase": "foundations",
+      "hours": 6,
+      "stretch": false,
+      "prereqs": ["js-ts-basics"],
+      "synonyms": ["http", "rest", "web protocols", "api basics"],
+      "project": {
+        "title": "Tiny HTTP server",
+        "brief": "Using only Node's built-in http module, serve three routes that return JSON and one that returns the right error code for unknown paths.",
+        "criteria": ["Correct status codes", "Returns valid JSON", "Clear README listing the routes"]
+      },
+      "suggested": [
+        { "title": "Request logger", "brief": "Log method, path and time for every request." },
+        { "title": "Echo server", "brief": "Return whatever JSON the client sends, with validation." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "cli-dev-setup",
+      "title": "Command line and dev setup",
+      "blurb": "Terminal, package managers and a tidy editor setup.",
+      "phase": "foundations",
+      "hours": 3,
+      "stretch": true,
+      "prereqs": [],
+      "synonyms": ["command line", "terminal", "bash", "shell", "linux basics", "powershell"],
+      "project": {
+        "title": "Chore automation script",
+        "brief": "Write a script that automates one repeated chore, like renaming files or backing up a folder, and explain how to run it on Windows and Mac.",
+        "criteria": ["Script runs as described", "Handles bad input safely", "Clear README"]
+      },
+      "suggested": [
+        { "title": "Project starter script", "brief": "One command that creates a new project folder with git set up." },
+        { "title": "Terminal cheat sheet", "brief": "Document your ten most useful commands with examples." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "node-express",
+      "title": "Node.js and Express",
+      "blurb": "Run JavaScript on the server and build routes with Express.",
+      "phase": "core",
+      "hours": 10,
+      "stretch": false,
+      "prereqs": ["js-ts-basics", "http-rest"],
+      "synonyms": ["node", "nodejs", "node.js", "express", "expressjs"],
+      "project": {
+        "title": "Notes API",
+        "brief": "Build an Express app with routes to create, read, update and delete notes held in memory, with clear error messages.",
+        "criteria": ["All routes work", "Sensible error handling", "Clear README with example requests"]
+      },
+      "suggested": [
+        { "title": "Link shortener", "brief": "Create short codes and redirect to the original URL." },
+        { "title": "Weather proxy", "brief": "Call a public weather API from your server and return a cleaned-up result." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "sql-postgres",
+      "title": "SQL and PostgreSQL",
+      "blurb": "Design tables, write queries and understand joins.",
+      "phase": "core",
+      "hours": 10,
+      "stretch": false,
+      "prereqs": ["js-ts-basics"],
+      "synonyms": ["sql", "postgres", "postgresql", "mysql", "databases", "database design"],
+      "project": {
+        "title": "Library database",
+        "brief": "Design a schema for books, members and loans, add sample data, and write queries for overdue loans and most borrowed books.",
+        "criteria": ["Sensible tables and keys", "Queries return correct results", "Schema and queries documented"]
+      },
+      "suggested": [
+        { "title": "Student results database", "brief": "Courses, students and grades with a report query." },
+        { "title": "Cinema bookings schema", "brief": "Shows, seats and bookings with no double booking." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "rest-api",
+      "title": "Building a REST API",
+      "blurb": "Put routes, a database and validation together into a real API.",
+      "phase": "core",
+      "hours": 12,
+      "stretch": false,
+      "prereqs": ["git-github", "node-express", "sql-postgres"],
+      "synonyms": ["rest api", "restful", "api development", "crud", "backend development"],
+      "project": {
+        "title": "Task manager API",
+        "brief": "Build an API for tasks with full CRUD, saved in PostgreSQL, with input validation and consistent error responses.",
+        "criteria": ["CRUD works against a real database", "Validates input", "Clear README with API docs"]
+      },
+      "suggested": [
+        { "title": "Habit tracker API", "brief": "Habits, daily check-ins and streak counts." },
+        { "title": "Bookmarks API", "brief": "Save links with tags and search by tag." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "auth-security",
+      "title": "Authentication and security",
+      "blurb": "Sign-up, login, passwords and protecting routes.",
+      "phase": "core",
+      "hours": 8,
+      "stretch": false,
+      "prereqs": ["rest-api"],
+      "synonyms": ["authentication", "authorization", "jwt", "oauth", "bcrypt", "security"],
+      "project": {
+        "title": "Add auth to your API",
+        "brief": "Add sign-up and login with hashed passwords and tokens, and protect the task routes so users only see their own tasks.",
+        "criteria": ["Passwords are hashed", "Routes are protected", "Users cannot see each other's data"]
+      },
+      "suggested": [
+        { "title": "Role-based access", "brief": "Add an admin role that can see everything." },
+        { "title": "Rate-limited login", "brief": "Block repeated failed logins." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "blurb": "Automated tests that catch bugs before users do.",
+      "phase": "core",
+      "hours": 6,
+      "stretch": true,
+      "prereqs": ["rest-api"],
+      "synonyms": ["testing", "unit testing", "jest", "vitest", "tdd", "integration tests"],
+      "project": {
+        "title": "Test suite for your API",
+        "brief": "Add automated tests covering every route, including at least three failure cases, and show how to run them.",
+        "criteria": ["Covers success and failure cases", "Tests run with one command", "Clear README"]
+      },
+      "suggested": [
+        { "title": "Test the database layer", "brief": "Unit tests for your query functions." },
+        { "title": "Tests on every push", "brief": "Run the test suite automatically with a CI workflow." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "deploying",
+      "title": "Deploying a service",
+      "blurb": "Get your API live, with secrets kept out of the code.",
+      "phase": "build",
+      "hours": 8,
+      "stretch": false,
+      "prereqs": ["rest-api"],
+      "synonyms": ["deployment", "deploy", "ci/cd", "docker", "vercel", "render", "hosting"],
+      "project": {
+        "title": "Put your API live",
+        "brief": "Deploy your task API to a hosting service with environment variables for secrets, and add a health-check route.",
+        "criteria": ["Live URL responds", "No secrets in the repo", "README explains how to deploy"]
+      },
+      "suggested": [
+        { "title": "Dockerise the API", "brief": "Add a Dockerfile and run it locally." },
+        { "title": "Staging and production", "brief": "Two environments with different settings." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "capstone-api",
+      "title": "Capstone API",
+      "blurb": "One real backend that shows everything you have learned.",
+      "phase": "build",
+      "hours": 20,
+      "stretch": false,
+      "prereqs": ["auth-security", "deploying"],
+      "synonyms": [],
+      "project": {
+        "title": "Campus marketplace API",
+        "brief": "Design and build an API for a real idea (a campus marketplace is a good start) with users, listings, auth, a database and a live deployment.",
+        "criteria": ["Real-world scope that works end to end", "Clean structure and security basics", "Live URL and clear README"]
+      },
+      "suggested": [
+        { "title": "Event tickets API", "brief": "Events, tickets and check-in." },
+        { "title": "Study group finder API", "brief": "Groups, members and schedules." }
+      ],
+      "resources": []
+    },
+    {
+      "id": "proof-capstone",
+      "title": "Proof: verified capstone",
+      "blurb": "Final check that ties your verified skills into one credential.",
+      "phase": "proof",
+      "hours": 6,
+      "stretch": false,
+      "prereqs": ["capstone-api"],
+      "synonyms": [],
+      "project": {
+        "title": "Capstone review",
+        "brief": "Submit your capstone repo with a short write-up: what you built, the hardest problem, and what you would improve.",
+        "criteria": ["Write-up is clear and honest", "Repo matches what you describe", "Shows growth across the path"]
+      },
+      "suggested": [],
+      "resources": []
+    }
+  ]
+}

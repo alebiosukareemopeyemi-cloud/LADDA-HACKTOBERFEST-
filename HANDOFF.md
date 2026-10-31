@@ -15,7 +15,7 @@ Working style: informal, direct. Settle ideas before generating large files. Nev
 - [x] Step 1c: lib/contract (Zod), lib/mocks, lib/api/client.ts, NEXT_PUBLIC_USE_MOCKS switch
 - [x] Step 1d: GitHub push + Vercel deploy (live: https://ladda-hacktoberfest.vercel.app, private repo, auto-deploys on push to main)
 - [ ] Step 2: - [x] Step 2: design system (globals.css, layout.tsx, lib/motion.ts, app/design/page.tsx preview; delete /design and /dev before the demo)
-- [ ] Step 3: Backend engineering catalog (12 nodes), drafted together with Kareem
+- [x] Step 3: Backend engineering catalog (content/catalog/backend.json, checked by scripts/validate-catalog.mjs)
 
 ## Decisions
 - Fresh project (ladda-v2); old keys not reused
@@ -26,6 +26,9 @@ Working style: informal, direct. Settle ideas before generating large files. Nev
 - app/dev/page.tsx is a throwaway check page. Delete it before the demo.
 - Intake defaults: one question per screen, 3 ranked paths, hours as chips, CV matches pre-ticked with the CV line as evidence.
 - Verify page: AI summary sits above the evidence.
+- Backend path is Node.js + TypeScript (so the repo tutor, which only reads TS/JS repos, can explain every submitted project). 12 skills: js-ts-basics, git-github, http-rest, cli-dev-setup (stretch), node-express, sql-postgres, rest-api, auth-security, testing (stretch), deploying, capstone-api, proof-capstone. About 105h total, 96h must-have.
+- Catalog resources arrays are EMPTY on purpose: Kareem adds hand-checked links later. Never invent URLs. Capstone and proof nodes have no CV synonyms, so a CV can never mark them Known.
+- lib/mocks/roadmap.ts still uses placeholder ids n1 to n12; switch it to read content/catalog/backend.json in Step 4.
 
 ## Keys
 Names are in .env.example. Values are in .env.local and the owner's password manager. The ed25519 private key must never change after credentials are issued.
