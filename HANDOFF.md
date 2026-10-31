@@ -21,11 +21,12 @@ Working style: informal, direct. Settle ideas before generating large files and 
   - Catalog typo "totalsexpenses" in js-ts-basics brief: CONFIRM FIXED.
 - [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account). NEXT.
 - [x] Step 6: Auth done (/auth, /auth/verify-email, /auth/callback, lib/supabase client+server, middleware). Demo account created manually in Supabase. Email sending is limited by the built-in sender; custom SMTP is a bonus. TODO: flip ENFORCE_INTAKE in middleware.ts once Intake exists, and HOME to /dashboard after Step 13.
-- [ ] Step 7: Intake. NEXT.
-- [ ] Step 8: Real roadmap engine (server-enforced unlocks, replaces mocks)
-- [ ] Step 9: AI project review (GitHub reading, rubric scoring, polling, unlock animation)
-- [ ] Step 10: Credential signing + verify page (client-side check, tamper test)
-- [ ] Step 11: Landing page + try-it demo (caching, rate limits)
+-## Update (Oct 31, later)
+- [x] Step 7: Intake page is REAL (app/intake/page.tsx), save route app/api/intake/complete/route.ts written (needs SUPABASE_SERVICE_ROLE_KEY in .env.local AND Vercel; user_nodes SQL was run). NOT yet confirmed: rows actually saved; ENFORCE_INTAKE still false.
+- [x] Step 10: lib/credential/{encoding,sign,demo}.ts, app/api/verify/[id]/route.ts (real ed25519 signing, sample ids demo-001 and demo-revoked), app/verify/[id]/page.tsx (Valid/Invalid/Revoked, browser check with @noble/ed25519 verifyAsync, tamper test). Works locally. Needs CREDENTIAL_PRIVATE_KEY in Vercel.
+- [~] Step 11 Landing: components/landing/LadderHero.tsx written (friendly character climbs a 4-rung ladder: Learn, Build, Verify, Hired; briefcase at the top). app/page.tsx must be replaced with the real landing (hero text + 3 buttons, recently verified strip, problem cards, how it works in 4 moves, employer verify box that opens /verify/<id> with placeholder demo-001, one founder card Alebiosu Kareem via content/builders.ts, chip "Featured: AWS Hacktoberfest is live", final CTA).
+- Cut (say so honestly): Step 8 real unlock engine, Step 12 repo tutor, real AI review (Step 9 only if time).
+- Before demo: push, add env vars to Vercel, delete /design and /dev, turn Confirm email back on, seed an account mid-path.
 - [ ] Step 12: Repo tutor on 2 or 3 pre-analysed repos
 - [ ] Step 13: Dashboard extras (opportunities cards, Hacktoberfest popup, notes, "Check back Sunday" challenges)
 - [ ] Step 14: Demo rehearsal (seed data, cached fallbacks, 90-second run-through)
