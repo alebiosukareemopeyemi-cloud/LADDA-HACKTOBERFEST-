@@ -1,10 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Change to "/dashboard" once the dashboard exists.
-const HOME = "/roadmap";
+// Where signed-in users land.
+const HOME = "/dashboard";
 
-// Flip to true when Intake (Step 7) works end to end, or everyone gets stuck at /intake.
+// Flip to true only after Intake is confirmed to save a profile row,
+// or everyone gets stuck at /intake.
 const ENFORCE_INTAKE = false;
 
 // /design and /dev are throwaway pages; remove them here when you delete them.
@@ -52,7 +53,12 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const go = (to: string) => NextResponse.redirect(new URL(to, request.url));
+  // Redirect, but keep any refreshed session cookies.
+  const go = (to: string) => {
+    const redirect = NextResponse.redirect(new URL(to, request.url));
+    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
+    return redirect;
+  };
 
   // 5. Signed in and visiting /auth: send home
   if (user && path === "/auth") return go(HOME);
