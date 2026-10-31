@@ -213,3 +213,24 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* Light streak that runs along the travelled road */
+@keyframes road-run {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: calc(var(--lit) * -1);
+    opacity: 0;
+  }
+}
+.road-run {
+  stroke-dasharray: 0.07 3;
+  animation: road-run 2.8s linear 2.4s infinite backwards;
+}
