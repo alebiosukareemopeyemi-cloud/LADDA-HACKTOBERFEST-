@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // Change to "/dashboard" once the dashboard exists.
 const HOME = "/roadmap";
 
-// Flip to true when Intake (Step 7) exists, or everyone gets sent to a 404.
+// Flip to true when Intake (Step 7) works end to end, or everyone gets stuck at /intake.
 const ENFORCE_INTAKE = false;
 
 // /design and /dev are throwaway pages; remove them here when you delete them.
@@ -18,6 +18,15 @@ function isPublic(path: string) {
 }
 
 export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+
+  // Safety net: a confirmation link that lands on the home page with ?code= goes to the callback.
+  if (path === "/" && request.nextUrl.searchParams.has("code")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/callback";
+    return NextResponse.redirect(url);
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -43,7 +52,6 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
   const go = (to: string) => NextResponse.redirect(new URL(to, request.url));
 
   // 5. Signed in and visiting /auth: send home
