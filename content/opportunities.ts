@@ -15,7 +15,20 @@ export interface Opportunity {
   applyNote?: string;
 }
 
+
 export const opportunities: Opportunity[] = [
+    {
+    id: "aws-hacktoberfest",
+    title: "AWS Hacktoberfest",
+    organiser: "AWS",
+    type: "Hackathon",
+    prize: "$25 for top 3",
+    dateLabel: "Ends 31 Oct",
+    closesAt: "2026-10-31T23:59:00+01:00",
+    blurb: "Hacktoberfest is live. $25 for the top 3.",
+    applyUrl: null,
+    applyNote: "Add the AWS Hacktoberfest link here.",
+  },
   {
     id: "talent-nation-ai-rebuild",
     title: "Talent Nation AI Rebuild Challenge",
