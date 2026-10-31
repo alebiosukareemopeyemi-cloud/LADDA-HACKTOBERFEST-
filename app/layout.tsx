@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import AppShell from "@/components/shell/AppShell";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -33,7 +34,10 @@ export default function RootLayout({
       className={`dark ${display.variable} ${body.variable} ${label.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh antialiased">
+        <AppShell />
+        {children}
+      </body>
     </html>
   );
 }
