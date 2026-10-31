@@ -8,6 +8,7 @@ import type { Roadmap, RoadmapNode } from "@/lib/contract";
 import { RoadmapRoad } from "@/components/roadmap/RoadmapRoad";
 import { CountUp } from "@/components/roadmap/CountUp";
 import { fadeUp } from "@/lib/motion";
+import HacktoberfestPopup from "@/components/announcements/HacktoberfestPopup";
 
 export default function RoadmapPage() {
   const router = useRouter();
@@ -97,6 +98,7 @@ export default function RoadmapPage() {
       {roadmap && (
         <RoadmapRoad nodes={roadmap.nodes} onSelect={onSelect} highlightId={highlight} />
       )}
+      <HacktoberfestPopup />
     </main>
   );
 }
