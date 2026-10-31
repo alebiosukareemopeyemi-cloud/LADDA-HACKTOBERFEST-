@@ -16,10 +16,10 @@ Working style: informal, direct. Settle ideas before generating large files and 
 - [x] Step 2: design system (globals.css, layout.tsx, lib/motion.ts, app/design/page.tsx preview; delete /design and /dev before the demo)
 - [x] Step 3: Backend catalog (content/catalog/backend.json, checked by scripts/validate-catalog.mjs)
 - [x] Step 4: Roadmap screen on mocks (app/roadmap/page.tsx, components/roadmap/RoadmapRoad.tsx, CountUp.tsx, lib/roadmap/geometry.ts). RoadmapRoad accepts an optional `labels` prop (per-stop status text, e.g. "Coming soon").
-- [~] Step 5: Node page. DONE: app/roadmap/[node]/page.tsx with header, 3-stop road (Learn, Build, Test), Learn panel (resource cards, empty state, disabled "Study it in a real repo"), Build panel (brief, criteria bars, GitHub link input, mock review: 2.5s shimmer then score; link containing "fail" gives Needs work + resubmit). Mock approval is in-memory only (resets on refresh).
-  - TODO piece 3: Certificates panel under the road (suggested + upload/link).
-  - KNOWN BUG: tapping a pin on /roadmap does not navigate to /roadmap/[node] (click handler fires, navigation does nothing, router.push and window.location both failed). Page works when opened by URL, e.g. /roadmap/node-express. Fix next.
-  - Typo in catalog: "totalsexpenses" in js-ts-basics project brief (should be "totals expenses").
+- - [x] Step 5: Node page (app/roadmap/[node]/page.tsx): road, Learn panel, Build panel with mock review, CertificatesPanel (components/roadmap/CertificatesPanel.tsx). Mock approval is in-memory only.
+  - Pin navigation bug: CONFIRM FIXED (if not, check RoadmapRoad.tsx click handler and slow first compile of the route).
+  - Catalog typo "totalsexpenses" in js-ts-basics brief: CONFIRM FIXED.
+- [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account). NEXT.
 - [ ] Step 6: Auth (Supabase, Resend, middleware guards, pre-verified demo account)
 - [ ] Step 7: Intake (3 questions, optional CV step) + "building your path" animation
 - [ ] Step 8: Real roadmap engine (server-enforced unlocks, replaces mocks)
